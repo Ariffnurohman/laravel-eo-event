@@ -21,6 +21,7 @@ class Event extends Model
         'mengeluarkan_sertifikat',
         'form_pendaftaran',
         'is_active',
+        'foto',
     ];
 
     protected $casts = [

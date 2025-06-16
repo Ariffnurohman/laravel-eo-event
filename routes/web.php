@@ -20,6 +20,7 @@ use App\Http\Controllers\Web\AdminController;
 
 
 
+Route::get('/profile', [ProfileController::class, 'index']);
 
 // Pembayaran
 
@@ -60,6 +61,8 @@ Route::get('/admin/scan', [ScanController::class, 'index'])->name('admin.scan');
 Route::get('/scan/verify', function (Request $request) {
     return 'Verifikasi QR: User ' . $request->user_id . ' Event ' . $request->event_id;
 })->name('scan.verify');
+
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -106,13 +109,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/explore', [AdController::class, 'index'])->name('user.explore');
-    });
-
-    // welcome blade php
-
-
-    Route::get('/', function () {
-        return view('welcome');
     });
 
     Route::get('/dashboard', function () {

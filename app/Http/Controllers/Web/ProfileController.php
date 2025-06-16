@@ -12,10 +12,33 @@ class ProfileController extends Controller
 {
 
     public function index()
-    {
-        $user = Auth::user();
-        return view('user.profile', compact('user'));
-    }
+{
+    $user = Auth::user();
+
+    // Statistik
+    $totalEvent = $user->participants()->count();
+    $totalHadir = $user->participants()->where('status_kehadiran', 'hadir')->count();
+    $totalBerbayar = $user->participants()
+        ->whereHas('event', function ($q) {
+            $q->where('jenis', 'Berbayar');
+        })->count();
+
+    // Riwayat event terakhir
+    $recentEvents = $user->participants()
+        ->with('event')
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('user.profile', compact(
+        'user',
+        'totalEvent',
+        'totalHadir',
+        'totalBerbayar',
+        'recentEvents'
+    ));
+}
+
 
     public function edit()
     {

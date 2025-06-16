@@ -26,6 +26,7 @@ class EventAdminController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
+            'deskripsi' => 'nullable|string',
             'lokasi' => 'required|string',
             'waktu_mulai' => 'required|date',
             'waktu_selesai' => 'required|date',
@@ -42,6 +43,7 @@ class EventAdminController extends Controller
 
         Event::create([
             'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
             'lokasi' => $request->lokasi,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_selesai' => $request->waktu_selesai,

@@ -24,7 +24,7 @@
                 <div class="mb-3">
                     <label class="form-label">Foto Profil</label><br>
                     @if ($user->profile_photo)
-                        <img src="{{ Storage::url($user->profile_photo) }}" width="80" class="rounded-circle mb-2">
+                    <img src="{{ Storage::url($user->profile_photo) }}" width="80" class="rounded-circle mb-2">
                     @endif
                     <input type="file" name="profile_photo" class="form-control">
                 </div>
