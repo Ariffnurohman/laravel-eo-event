@@ -18,7 +18,7 @@
 
             @if ($event->foto)
             <img src="{{ asset($event->foto) }}"
-                alt="Foto Event"
+                alt="events"
                 class="img-fluid rounded mb-3"
                 style="max-height: 300px; object-fit: cover; width: 100%;">
             @endif

@@ -16,14 +16,14 @@
     @if ($joinedEvents->isEmpty())
     <div class="alert alert-info">Kamu belum mendaftar event manapun.</div>
     @else
+    @foreach ($joinedEvents as $p)
+    @if($p->event->foto)
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @foreach ($joinedEvents as $p)
         <div class="list-group-item border rounded-3 mb-2 shadow-sm">
-            @if($p->event->foto)
             <img src="{{ asset($p->event->foto) }}"
-                alt="Foto Event"
+                alt="events"
                 class="rounded mb-2"
-                style="max-height: 150px; object-fit: cover; width: 100%;">
+                style="max-height: 200px; object-fit: cover; width: 100%;">
             @endif
 
             <div class="card-body">

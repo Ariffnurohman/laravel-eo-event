@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
             {{-- Foto Profil --}}
             @if ($user->foto)
-            <img src="{{ asset($user->foto) }}" class="rounded-circle shadow mb-3"
+            <img src="{{ asset($user->foto) }}" class="rounded-circle shadow mb-3" alt="Foto Profil""
                 style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #dee2e6;">
             @else
             <img src="{{ asset('images/default.jpg') }}" class="rounded-circle shadow mb-3"

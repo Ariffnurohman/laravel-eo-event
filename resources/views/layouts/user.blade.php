@@ -38,7 +38,7 @@
 </head><body>{{-- Navbar Peserta --}}
 <nav class="navbar navbar-expand-lg navbar-light text-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">EO Event</a>
+    <img src="{{ asset('images/logo-eo.png') }}" alt="Logo" class="me-3 img-fluid" style="height: 80px; max-height: 50px;">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPeserta">
             <span class="navbar-toggler-icon"></span>
         </button>

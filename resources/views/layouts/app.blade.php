@@ -57,6 +57,9 @@
                 <li class="nav-item mb-2">
                     <a href="{{ route('admin.scan') }}" class="nav-link {{ request()->routeIs('admin.scan') ? 'active' : '' }}">📷 Scan Kehadiran</a>
                 </li>
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.ads.create') }}" class="nav-link {{ request()->routeIs('admin.ads.create') ? 'active' : '' }}">📢 Buat Iklan</a>
+                </li>
             </ul>
         </aside>
 

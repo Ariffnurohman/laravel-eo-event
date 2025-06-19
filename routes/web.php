@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ScanController;
 use App\Http\Controllers\Web\PaymentController;
 use App\Http\Controllers\Web\AdminProfileController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\ExploreController;
 
 
 
@@ -49,8 +50,6 @@ Route::get('/admin/scan', [\App\Http\Controllers\Admin\ScanController::class, 'i
 Route::post('/admin/scan', [\App\Http\Controllers\Admin\ScanController::class, 'submit'])->name('admin.scanSubmit');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/ads/create', [AdController::class, 'create'])->name('ads.create');
-    Route::post('/ads', [AdController::class, 'store'])->name('ads.store');
     Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.profile');
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
 });
@@ -105,9 +104,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Iklan
-
+    Route::prefix('admin')->middleware(['auth'])->group(function () {
+        Route::get('/ads', [AdController::class, 'index'])->name('admin.ads.index');
+        Route::get('/ads/create', [AdController::class, 'create'])->name('admin.ads.create');
+        Route::post('/ads', [AdController::class, 'store'])->name('admin.ads.store');
+    });
 
     Route::middleware(['auth'])->group(function () {
+        Route::get('/explore', [ExploreController::class, 'index'])->name('user.explore');
         Route::get('/explore', [AdController::class, 'index'])->name('user.explore');
     });
 
