@@ -1,49 +1,37 @@
 <?php
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Api\{
-    EventController,
-    ParticipantController,
-    AttendanceController,
-    CertificateController,
-    UserController,
-    AdminAuthController
-};
 
-// Login (tanpa token)
-Route::prefix('admin')->group(function () {
-    Route::post('/login', [AdminAuthController::class, 'login']);
-});
+// ✅ Import controller yang sesuai dengan file kamu
+use App\Http\Controllers\Web\AdminAuthController;
+use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\ParticipantController;
 
-// Token-protected routes
+
+// ✅ ROUTE PUBLIK - Bisa diakses dari Ionic tanpa token
+Route::get('/events', [EventController::class, 'index']);
+
+// ✅ ROUTE AUTENTIKASI ADMIN (bisa kamu ganti nama jika buat peserta juga)
+Route::post('/login', [AdminAuthController::class, 'login']);
+Route::post('/register', [AdminAuthController::class, 'register']);
+
+// ✅ ROUTE UNTUK PESERTA - Dilindungi oleh token Sanctum
 Route::middleware('auth:sanctum')->group(function () {
-    
-    // Authenticated logout
-    Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
+    Route::get('/user', [AdminAuthController::class, 'user']);
+    Route::post('/logout', [AdminAuthController::class, 'logout']);
 
-    // Event (semua dijaga token)
-    Route::get('/events', [EventController::class, 'index']);
-    Route::get('/events/{id}', [EventController::class, 'show']);
-    Route::post('/admin/events', [EventController::class, 'store']);
-    Route::put('/admin/events/{id}', [EventController::class, 'update']);
-    Route::delete('/admin/events/{id}', [EventController::class, 'destroy']);
-
-    // User data
-    Route::get('/user', [UserController::class, 'me']);
-
-    // Kehadiran dan peserta
-    Route::post('/events/{eventId}/register', [ParticipantController::class, 'registerToEvent']);
-    Route::get('/my-events', [ParticipantController::class, 'myEvents']);
-    Route::get('/my-events/{eventId}/qr', [ParticipantController::class, 'myQrCode']);
-    Route::put('/admin/kehadiran/{participantId}', [ParticipantController::class, 'updateKehadiran']);
-
-    // Sertifikat
-    Route::post('/certificates/generate/{participantId}', [CertificateController::class, 'generate']);
-    Route::get('/certificates/download/{participantId}', [CertificateController::class, 'download']);
-
-    // Scan kehadiran
-    Route::post('/attendance/scan', [AttendanceController::class, 'scanQrCode']);
+    Route::get('/events/joined', [ParticipantController::class, 'joinedEvents']);
+    Route::post('/events/{eventId}/join', [ParticipantController::class, 'joinEvent']);
+    Route::post('/upload-payment-proof', [ParticipantController::class, 'uploadPaymentProof']);
 });
 
-// Public route (boleh tanpa login)
-Route::get('/participants/{id}/qr', [ParticipantController::class, 'generateQrCode']);
-Route::get('/certificates/verify/{token}', [CertificateController::class, 'verify'])->name('qr.verify');
+Route::get('/events', [EventController::class, 'index']); // ini untuk Ionic
+
+// AUTHENTICATION
+Route::post('/login', [AdminAuthController::class, 'login']);
+Route::post('/register', [AdminAuthController::class, 'register']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [AdminAuthController::class, 'user']);
+    Route::post('/logout', [AdminAuthController::class, 'logout']);
+});
