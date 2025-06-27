@@ -61,8 +61,8 @@ Route::get('/scan/verify', function (Request $request) {
     return 'Verifikasi QR: User ' . $request->user_id . ' Event ' . $request->event_id;
 })->name('scan.verify');
 
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
