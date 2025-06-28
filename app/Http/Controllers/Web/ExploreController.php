@@ -13,20 +13,25 @@ class ExploreController extends Controller
 {
     public function index(Request $request)
     {
+        $popularEvents = Event::where('is_active', true)
+            ->orderBy('kuota', 'desc')
+            ->take(5)
+            ->get();
+
         $query = Event::query();
-    
+
         if ($request->filled('kategori')) {
             $query->where('kategori', $request->kategori);
         }
-    
+
         if ($request->filled('search')) {
             $query->where('nama', 'like', '%' . $request->search . '%');
         }
-    
-        $events = $query->latest()->paginate(6); // ← INI YANG WAJIB ADA
-    
+
+        $events = $query->latest()->paginate(6);
+
         $ads = Ad::where('is_active', true)->latest()->get();
-    
-        return view('user.explore', compact('events', 'ads'));
+
+        return view('user.explore', compact('events', 'ads', 'popularEvents'));
     }
 }

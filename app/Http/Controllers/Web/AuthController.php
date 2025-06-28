@@ -17,25 +17,33 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validasi input
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-    if (auth()->attempt($credentials)) {
-        $request->session()->regenerate();
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
-        // Redirect berdasarkan role
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->route('profile'); // atau 'dashboard' peserta
+            return redirect()->intended('/dashboard'); // sesuaikan nanti
         }
-    }
 
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('dashboard');
+            }
+        }
+
+        // Jika gagal login
+        return back()->with('error', 'Email atau password salah.');
     }
-    
 
     public function logout(Request $request)
     {
@@ -71,4 +79,8 @@ class AuthController extends Controller
 
         return redirect('/dashboard');
     }
+
+    // Gabungan dari API
+
+    
 }

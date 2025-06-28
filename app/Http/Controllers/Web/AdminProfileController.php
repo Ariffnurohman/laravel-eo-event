@@ -9,6 +9,6 @@ class AdminProfileController extends Controller
     public function index()
     {
         $admin = Auth::user();
-        return view('admin.profile', compact('admin'));
+        return view('admin.dashboard', compact('admin'));
     }
 }
