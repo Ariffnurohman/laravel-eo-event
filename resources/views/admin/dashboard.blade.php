@@ -10,9 +10,9 @@
             <p class="mb-4">Kamu dapat mengelola <strong>event</strong>, <strong>peserta</strong>, <strong>kehadiran</strong>, dan <strong>sertifikat</strong> di sini.</p>
             <div class="d-grid gap-2 d-md-block">
                 <a href="{{ route('admin.events.index') }}" class="btn btn-primary me-2 mb-2">Kelola Acara</a>
-                <a href="{{ route('admin.events.stats', ['event' => 1]) }}" class="btn btn-outline-info me-2 mb-2">📊 Lihat Statistik</a>
-                <a href="{{ route('admin.scan.page') }}" class="btn btn-outline-warning me-2 mb-2">📷 Scan Kehadiran</a>
-                <a href="{{ route('admin.participants.index') }}" class="btn btn-outline-primary me-2 mb-2">👥 Manajemen Peserta</a>
+                <a href="{{ route('admin.events.stats') }}" class="btn btn-outline-info me-2 mb-2">📊 Lihat Statistik</a>
+                <a href="{{ route('admin.scan') }}" class="btn btn-outline-warning me-2 mb-2">📷 Scan Kehadiran</a>
+                <a href="{{ route('admin.events.stats', ['event' => $event->id]) }}" class="btn btn-sm btn-outline-primary">Kelola</a>
                 <a href="{{ route('admin.ads.create') }}" class="btn btn-outline-primary me-2 mb-2">📢 Buat Iklan</a>
 
             </div>

@@ -49,13 +49,20 @@
                     <a href="{{ route('admin.events.index') }}" class="nav-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">🎯 Kelola Event</a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{{ route('admin.participants.index') }}" class="nav-link {{ request()->routeIs('admin.participants.*') ? 'active' : '' }}">👥 Peserta</a>
+                    @if($event)
+                    <a href="{{ route('admin.participants.index', ['event' => $event->id]) }}" class="nav-link {{ request()->routeIs('admin.participants.*') ? 'active' : '' }}">👥 Peserta</a>
+                    @endif
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{{ route('admin.events.stats') }}" class="nav-link {{ request()->routeIs('admin.events.stats') ? 'active' : '' }}">📊 Statistik</a>
+                    @if(isset($event))
+                    <a href="{{ route('admin.events.stats', ['event' => $event->id]) }}"
+                        class="nav-link {{ request()->routeIs('admin.events.stats') ? 'active' : '' }}">
+                        📊 Statistik
+                    </a>
+                    @endif
                 </li>
                 <li class="nav-item mb-2">
-                    <a href="{{ route('admin.scan') }}" class="nav-link {{ request()->routeIs('admin.scan') ? 'active' : '' }}">📷 Scan Kehadiran</a>
+                    <a href="{{ route('admin.scan.page') }}" class="nav-link {{ request()->routeIs('admin.scan.page') ? 'active' : '' }}">📲 Scan Kehadiran</a>
                 </li>
                 <li class="nav-item mb-2">
                     <a href="{{ route('admin.ads.create') }}" class="nav-link {{ request()->routeIs('admin.ads.create') ? 'active' : '' }}">📢 Buat Iklan</a>

@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-
+use Illuminate\Support\Facades\View;
+use App\Models\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::useBootstrap();
+        View::composer('*', function ($view) {
+            $event = \App\Models\Event::latest()->first();
+            $view->with('event', $event);
+        });
     }
+    
 }
